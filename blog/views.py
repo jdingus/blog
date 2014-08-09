@@ -48,3 +48,18 @@ def add_post_post():
     session.add(post)
     session.commit()
     return redirect(url_for("posts"))
+
+@app.route("/post/<int:id>")
+def posts(id=1):
+
+    posts = session.query(Post)
+    posts = posts.order_by(Post.datetime.desc())
+    posts = posts[start:end]
+
+    return render_template("posts.html",
+        posts=posts,
+        has_next=has_next,
+        has_prev=has_prev,
+        page=page,
+        total_pages=total_pages
+    )
