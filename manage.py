@@ -1,3 +1,4 @@
+#manage.py
 import os
 from flask.ext.script import Manager
 
@@ -10,7 +11,7 @@ manager = Manager(app)
 @manager.command
 def run():
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='192.168.11.106', port=port)
 
 @manager.command
 def seed():
