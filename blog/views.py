@@ -35,9 +35,9 @@ def posts(page=1, paginate_by=10):
         total_pages=total_pages
     )
 
-@app.route("/singlepost/<int:blogid>")
-def single(blogid=1,):
-    posts = session.query(Post)#.get(blogid)
+@app.route("/singlepost/1")
+def singlepost(blogid=1,):
+    posts = session.query(Post).get(blogid)
     return render_template("singlepost.html",posts=posts,blogid=blogid)
 
 @app.route("/post/add", methods=["GET"])
