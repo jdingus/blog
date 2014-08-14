@@ -54,3 +54,19 @@ def add_post_post():
     session.commit()
     return redirect(url_for("posts"))
 
+@app.route("/post/<int:blogid>/edit", methods=["GET"])
+def edit_post_get(blogid=1):
+    post = session.query(Post).filter(Post.id==blogid).first()
+    content = post.content
+    title = post.title
+    print 'post.content:',content
+    print 'post.title:',title
+    return render_template("edit_post.html",content=content,title=title)
+    # post = Post(
+    #     title=request.form["title"],
+    #     content=mistune.markdown(request.form["content"]),
+    # )
+    # session.add(post)
+    # session.commit()
+    # return redirect(url_for("posts"))
+
