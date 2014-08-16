@@ -20,7 +20,7 @@
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
     </head>
-
+    
     <body>
         <div class="navbar navbar-inverse navbar-static-top" role="navigation">
             <div class="container">
@@ -40,6 +40,16 @@
                 </div>
             </div>
         </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
 
         <div class="container">
             {% block content %}{% endblock %}
