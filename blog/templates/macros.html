@@ -3,7 +3,8 @@
     <div class="col-md-2 text-right metadata">
         <ul class="list-unstyled">
             <li>
-                <a href="{{url_for('edit_post_get',blogid=post.id)}}"> {{ post.datetime | dateformat("%d/%m/%y") }}  </a>
+                {{ post.datetime | dateformat("%m/%d/%y") }}
+                <a href="{{url_for('edit_post_get',blogid=post.id)}}"> *  </a>
             </li>
         </ul>
     </div>

@@ -59,14 +59,22 @@ def edit_post_get(blogid=1):
     post = session.query(Post).filter(Post.id==blogid).first()
     content = post.content
     title = post.title
-    return render_template("edit_post.html",content=content,title=title)
+    return render_template("edit_post.html",content=content,title=title,post=post)
 
 @app.route("/post/<int:blogid>/edit", methods=["POST"])
 def edit_post_post(blogid=1):
     post = session.query(Post).filter(Post.id==blogid).first()
     post.title = request.form["title"]
     post.content = mistune.markdown(request.form["content"])
+    print 'post.title',post.title
+    print 'post.content',post.content
     session.add(post)
+    session.commit()
+    return redirect(url_for("posts"))
+
+@app.route("/post/<int:blogid>/delete", methods=["GET"])
+def delete_post_get(blogid=1):
+    session.query(Post).filter(Post.id==blogid).delete()
     session.commit()
     return redirect(url_for("posts"))
 
