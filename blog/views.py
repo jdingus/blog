@@ -9,9 +9,12 @@ import mistune
 from flask import request, redirect, url_for
 
 from flask import flash
-from flask.ext.login import login_user
+from flask.ext.login import login_user,logout_user
 from werkzeug.security import check_password_hash
 from models import User
+
+from flask.ext.login import login_required, current_user
+from login import load_user
 
 @app.route("/")
 @app.route("/page/<int:page>")
@@ -46,10 +49,12 @@ def singlepost(blogid=1):
     return render_template("singlepost.html",posts=posts)
 
 @app.route("/post/add", methods=["GET"])
+@login_required
 def add_post_get():
     return render_template("add_post.html")
 
 @app.route("/post/add", methods=["POST"])
+@login_required
 def add_post_post():
     post = Post(
         title=request.form["title"],
@@ -60,6 +65,7 @@ def add_post_post():
     return redirect(url_for("posts"))
 
 @app.route("/post/<int:blogid>/edit", methods=["GET"])
+@login_required
 def edit_post_get(blogid=1):
     post = session.query(Post).filter(Post.id==blogid).first()
     content = post.content
@@ -67,6 +73,7 @@ def edit_post_get(blogid=1):
     return render_template("edit_post.html",content=content,title=title,post=post)
 
 @app.route("/post/<int:blogid>/edit", methods=["POST"])
+@login_required
 def edit_post_post(blogid=1):
     post = session.query(Post).filter(Post.id==blogid).first()
     post.title = request.form["title"]
@@ -78,6 +85,7 @@ def edit_post_post(blogid=1):
     return redirect(url_for("posts"))
 
 @app.route("/post/<int:blogid>/delete", methods=["GET"])
+@login_required
 def delete_post_get(blogid=1):
     session.query(Post).filter(Post.id==blogid).delete()
     session.commit()
@@ -98,5 +106,15 @@ def login_post():
         return redirect(url_for("login_get"))
 
     login_user(user)
-    flash("Successfully Logged in", "danger")
+    current_name = current_user.name
+    flash(current_name + ' is Logged In')
     return redirect(request.args.get('next') or url_for("posts"))
+
+@app.route("/logout")
+@login_required
+def logout():
+    current_name = current_user.name
+    logout_user()
+    if current_user:
+        flash(current_name + ' is Logged Out')
+    return redirect(url_for('posts'))
