@@ -35,6 +35,9 @@
                     <a class="navbar-brand" href="{{ url_for('add_post_post') }}">Add Post</a>
                     <a class="navbar-brand" href="{{ url_for('login_post') }}">Login</a>
                     <a class="navbar-brand" href="{{ url_for('logout') }}">Logout</a>
+                    <a class="navbar-brand" button type="button" class="btn btn-default btn-sm">
+                      <span class="glyphicon glyphicon-user"></span> {{current_user.name}}
+                    </button></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
