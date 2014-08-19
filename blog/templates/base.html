@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>Blogful</title>
+        <title>Josh Dingus</title>
 
 
         <!-- Bootstrap -->
@@ -31,13 +31,27 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url_for('posts') }}">Blogful</a>
+                    {% if current_user.name %}
+                    <a class="navbar-brand" href="{{ url_for('posts') }}">Home</a>
                     <a class="navbar-brand" href="{{ url_for('add_post_post') }}">Add Post</a>
-                    <a class="navbar-brand" href="{{ url_for('login_post') }}">Login</a>
-                    <a class="navbar-brand" href="{{ url_for('logout') }}">Logout</a>
-                    <a class="navbar-brand" button type="button" class="btn btn-default btn-sm">
+                    <a class="navbar-brand" href="{{ url_for('about_me') }}">About</a>
+                    <!-- <a class="navbar-brand" href="{{ url_for('logout') }}">Logout</a> -->
+                    <a class="navbar-brand" button type="button" class="btn btn-default btn-sm" href="{{ url_for('logout') }}">
                       <span class="glyphicon glyphicon-user"></span> {{current_user.name}}
                     </button></a>
+                    {% else %}
+                    <a class="navbar-brand" href="{{ url_for('posts') }}">Home</a>
+                    <a class="navbar-brand" href="{{ url_for('about_me') }}">About</a>
+                    <!-- <a class="navbar-brand" href="{{ url_for('add_post_post') }}">Add Post</a> -->
+                    <a class="navbar-brand" href="{{ url_for('login_post') }}">Login</a>
+                    <!-- <a class="navbar-brand" href="{{ url_for('logout') }}">Logout</a> -->
+                    <!-- <a class="navbar-brand" button type="button" class="btn btn-default btn-sm"> -->
+                      <!-- <span class="glyphicon glyphicon-user"></span> {{current_user.name}} -->
+                    <!-- </button></a> -->
+                    {% endif %}
+
+                    <!-- if logged in: Blogful / Add Post / Logout Josh -->
+                    <!-- if not logged in: Blogful / About / Login -->
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">

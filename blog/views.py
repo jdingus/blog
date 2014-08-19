@@ -118,3 +118,7 @@ def logout():
     if current_user:
         flash(current_name + ' is Logged Out')
     return redirect(url_for('posts'))
+
+@app.route("/about")
+def about_me():
+    return render_template("about.html")

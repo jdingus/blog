@@ -10,7 +10,8 @@
 
 {{ macros.render_post(posts) }}
 
-
+    {% if current_user.name %}
     <a href="{{url_for('edit_post_get',blogid=posts.id)}}" class="btn btn-primary"><i class="icon-wrench"></i> Edit Post</a>
+    {% endif %}
 
 {% endblock %}
